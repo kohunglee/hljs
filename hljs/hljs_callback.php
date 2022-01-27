@@ -10,8 +10,10 @@ function callback_init() {
 	
 	// 默认主题 vs
 	$plugin_storage->setValue('isViewLine', 'y');
-	$plugin_storage->setValue('hljsCssNum', '225');
-	$plugin_storage->setValue('hljsCssUrl', BLOG_URL.'content/plugins/hljs/hljs_css/vs.min.css');
+	$plugin_storage->setValue('hljsCssNum', '7');
+	$plugin_storage->setValue('hljsCssUrl', BLOG_URL.'content/plugins/hljs/hljs_css/an-old-hope.min.css');
+	$plugin_storage->setValue('customStyleUrl', BLOG_URL.'content/plugins/hljs/custom_preset/Mac_dark.style');
 }
+
 
 
