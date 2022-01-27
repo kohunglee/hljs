@@ -1,6 +1,6 @@
 <?php
 !defined('EMLOG_ROOT') && exit('error');
-error_reporting(0); 
+error_reporting(E_ALL); 
 ?>
 
 <!--hljs代码高亮插件仪表盘的样式文件-->
@@ -17,19 +17,22 @@ function plugin_setting_view()
 	$hljs_msg 		= '';
 	$lineChecked	= '';
 	$cssOpt 		= '';
+	$getStyleOpt	= '';
 	$plugin_storage = Storage::getInstance('plugin_hljs');  // 初始化emlog插件存储实例plugin_hljs
+	$getInfo		= isset($_GET["set_act"]) ? addslashes($_GET["set_act"]) : '';
 
 	$dir = dirname(__FILE__);
 	$cssFileArray = scandir($dir.'/hljs_css');
+	$customStyleFileArray = scandir($dir.'/custom_preset');
 
-	if ($_GET["set_act"] == 'save') {  // 当接收到的GET = 保存
+	if ($getInfo == 'save') {  // 当接收到的GET = 保存
 		$getConfig = [
 			'is_viewLine'	=> isset($_POST['is_viewLine']) ? addslashes($_POST['is_viewLine']) : 'n',
 			'cssName'		=> isset($_POST['cssName']) ? addslashes($_POST['cssName']) : ''
 		];
-		$plugin_storage->setValue('isViewLine', $getConfig[is_viewLine]);
-		$plugin_storage->setValue('hljsCssNum', $getConfig[cssName]);
-		$plugin_storage->setValue('hljsCssUrl', BLOG_URL.'content/plugins/hljs/hljs_css/'.$cssFileArray[$getConfig[cssName]]);
+		$plugin_storage->setValue('isViewLine', $getConfig['is_viewLine']);
+		$plugin_storage->setValue('hljsCssNum', $getConfig['cssName']);
+		$plugin_storage->setValue('hljsCssUrl', BLOG_URL.'content/plugins/hljs/hljs_css/'.$cssFileArray[$getConfig['cssName']]);
 		$hljs_msg = "保存成功！";
 	}else{  // 当接收到的GET != 保存
 		$getConfig = [
@@ -38,14 +41,14 @@ function plugin_setting_view()
 		];
 	}
 
-if($getConfig[is_viewLine] == 'y'){  // 根据emlog插件存储实例中的内容，决定'显示行号'是否选中
+if($getConfig['is_viewLine'] == 'y'){  // 根据emlog插件存储实例中的内容，决定'显示行号'是否选中
 	$lineChecked = 'checked="checked"';
 }
 
 foreach($cssFileArray as $x=>$css_name)  // 将样式条列入栈$cssOpt
 {
 	$isSelect = '';
-	if($x == $getConfig[cssName]){
+	if($x == $getConfig['cssName']){
 		$isSelect = 'selected="selected"';
 	}
 	if($css_name !== '.' && $css_name !== '..' && $css_name !== '.DS_Store'){  // 过滤linux/unix系统里的.和..文件等
@@ -53,6 +56,22 @@ foreach($cssFileArray as $x=>$css_name)  // 将样式条列入栈$cssOpt
 	}
 }
 
+foreach($customStyleFileArray as $x=>$style_FileName)  // 将自定义扩展样式的文件名存入数组 $getStyleName
+{
+	$isSelect = '';
+	if(BLOG_URL.'content/plugins/hljs/custom_preset/'.$style_FileName == $plugin_storage->getValue('customStyleUrl')){
+		$isSelect = 'selected="selected"';
+	}
+	if($style_FileName !== '.' && $style_FileName !== '..' && $style_FileName !== '.DS_Store'){  // 过滤linux/unix系统里的.和..文件等
+		$getStyleOpt = $getStyleOpt.'<option value="'.$x.'"'.$isSelect.'>'.$style_FileName.'</option>';
+	}
+}
+
+///////////////////////////////////////// 读取
+$iuiuiuiuiu = BLOG_URL."content/plugins/hljs/custom_preset/Mac_dark.style";
+$xsxsxssxsxsx = file_get_contents($iuiuiuiuiu);
+echo $xsxsxssxsxsx;
+/////////////////////////////////////////
 ?>
 <!-----------代码高亮插件的后台设置输出区---------->
 <div class="card" style="max-width: 900px;">
@@ -78,6 +97,7 @@ foreach($cssFileArray as $x=>$css_name)  // 将样式条列入栈$cssOpt
 					</select>
 				</div>
 				<br/>
+					<input type="button" name="back" id="custom_plugin" value="外观扩展" class="btn btn-sm btn-success" data-toggle="modal" data-target="#custom">
 					<input type="button" name="back" id="back" value="返回" onclick="window.location.href = 'plugin.php';" class="btn btn-sm btn-success">
 					<input type="submit" value="保存" class="btn btn-sm btn-primary"/>
 					<hr width="250px" />
@@ -121,6 +141,44 @@ foreach($cssFileArray as $x=>$css_name)  // 将样式条列入栈$cssOpt
 		</div>
 	</div>
 </div>
+<!--- 外观扩展模态框 --->
+	<div class="modal fade" id="custom" tabindex="-1" role="dialog" aria-labelledby="custom1" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					自定义外观扩展
+				</div>
+				<div class="modal-body">
+					<div>
+					<label for="name">预设</label>
+						<select class="form-control" id="custom_preset" >
+							<?php echo $getStyleOpt; ?>
+						</select>
+					</div>
+					<br>
+					<div class="form-group">
+						<label for="name">Html</label>
+						<textarea class="form-control" id="custom_preset_textarea" rows="12"></textarea>
+					</div>
+					<br>
+					<div class="custom_tips">
+						<b>说明：</b> 自定义外观扩展可在代码高亮的基础上，继续美化外观，也可辅助修复一些前台显示问题。
+						因为 Html 代码会在前台“代码高亮 CSS 内容”后部输出。
+						如果有好的创意，欢迎制作 .style 文件提交到 <a href="http://github.com/kohunglee/hljs">kohunglee/hljs</a> 的 Custom_preset 文件夹，我会及时更新到商店。
+					<div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						关闭
+					</button>
+					<button type="button" class="btn btn-primary">
+						应用
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--- 外观扩展模态框（结束） --->
 <script>
 var version 		= 11;  // 这是当前版本号代码，是版本更新的依据
 var $CheckUpdate 	= $("#hljsCheckUpdate");  // '更新'的触发链接对象
@@ -181,6 +239,38 @@ function previewCss(){  // 预览
 	let vLanguage	= $('#language').val();
 	$('#previewContent').attr('src','../content/plugins/hljs/preview.php?isLine='+isLine+'&cssName='+cssName+'&vLanguage='+vLanguage);
 }
+/////////////////////
+function HTMLEncode(html) {  // html 转义
+	var temp = document.createElement("div");
+	(temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+	var output = temp.innerHTML;
+	temp = null;
+	return output;
+}
+function HTMLDecode(text) {  // html 反转义
+	var temp = document.createElement("div"); 
+	temp.innerHTML = text; 
+	var output = temp.innerText || temp.textContent; 
+	temp = null; 
+	return output; 
+} 
+////////////////////////
+function getCustomStyleHtml(param){
+	$.get("../content/plugins/hljs/hljs_customStyleHtml.php?act=getHtml&param=" + param,function(data,status){
+		$("#custom_preset_textarea").html(HTMLEncode(data));
+	})
+}
+
+function setCustomStyleHtml(param,html){
+	$.post("../content/plugins/hljs/hljs_customStyleHtml.php?act=setHtml&param=" + param,
+    {
+        writeHtml:HTMLDecode(html)
+    },
+    function(data){
+        alert(data);
+		location.reload();
+    });
+}
 
 $('#is_viewLine,#cssName,#changeLang').change(function(){
 	previewCss();
@@ -188,6 +278,7 @@ $('#is_viewLine,#cssName,#changeLang').change(function(){
 
 $(document).ready(function(){
 	previewCss();
+	getCustomStyleHtml($("#custom_preset option[selected='selected']").html())
 });
 
 </script>
