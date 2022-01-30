@@ -1,0 +1,58 @@
+<!-- 名字 - Mac风格(暗) -->
+<!-- 作者 - 串串狗xk -->
+<style>
+    pre {
+        background: #3f3f3f !important;
+        border-radius: 6px;
+        box-shadow: 1px 6px 12px 2px #777777;
+    }
+    pre:before {
+        content: \" \";
+        display: block;
+        width: 12px;
+        height: 12px;
+        margin: 10px;
+        position: initial;
+        border-radius: 50%;
+        background: #fc625d;
+        box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+        z-index: 2
+    }
+    pre code {
+        /* unset */
+    }
+    .hljs {
+        /* unset */
+    }
+    .hljs-line-numbers{
+        font-family: Consolas,Monaco,\'Andale Mono\',\'Ubuntu Mono\',monospace;
+        padding-right: 10px!important;
+        text-align: right;
+        color: #051623;
+        background: #808080!important
+    }
+    .hljs_lang {
+        user-select: none;
+        display: block;
+        width: 100%;
+        margin-top: -28px;
+        margin-bottom: 4px;
+        padding-right: 16px;
+        color: #d1d5d8;
+        text-align: right;
+    }
+    /* 模仿自:https://www.xcnte.com/archives/377/ */
+</style>
+<script src=\"https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>
+<script defer>
+    $(document).ready(function(){
+        for( let i = 0; i < $(\"pre\").length; i++){
+            let resource =$(\"pre:eq(\"+ i +\")\").html()
+            let lang = (resource.match(/(?<=language\\-)[a-z]+/i)[0]) ? (resource.match(/(?<=language\\-)[a-z]+/i)[0]) : \'\'
+
+            if(lang == \"cpp\") lang = \"c++\"
+            if(lang == \"csharp\") lang = \"c#\"
+            $(\"pre:eq(\"+ i +\")\").html(\"<span class=\'hljs_lang\' >\"+ lang +\"</span>\" + resource)
+        }
+    })
+</script>
