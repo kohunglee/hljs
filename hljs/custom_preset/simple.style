@@ -1,0 +1,79 @@
+<!-- 名字 - 简单 -->
+<!-- 作者 - 串串狗xk -->
+<style>
+    pre {
+        background: white!important;
+    }
+    
+    pre code {
+        /* unset */
+    }
+    .hljs {
+            border: 1px solid #e4e4e4!important;
+            border-top: 0!important;
+    }
+    .hljs-line-numbers{
+        font-family: Consolas,Monaco,\'Andale Mono\',\'Ubuntu Mono\',monospace;
+        padding-right: 10px!important;
+        text-align: right;
+        color: #b3b3b3;
+        background: #ffffff!important;
+        border: 1px solid #e4e4e4!important;
+        border-top: 0px!important;
+        border-right: 0px!important;
+    }
+    .hljs_lang {
+        font-family: initial;
+        font-weight: 600;
+        user-select: none;
+        display: block;
+        width: 100%;
+        padding-left: 16px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        color: #886353;
+        text-align: left;
+        border: 1px solid #e4e4e4;
+    }
+.code_copy {
+        font-family: initial;
+        float: right;
+        display: block;
+        position: inherit;
+        color: #a7a7a7;
+        margin-top: 4px;
+        cursor: pointer;
+        padding-right: 16px;
+}
+pre input{
+    display:none;
+}
+</style>
+<script src=\"https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>
+<script defer>
+    $(document).ready(function(){
+        for( let i = 0; i < $(\"pre\").length; i++){
+            let resource =$(\"pre:eq(\"+ i +\")\").html()
+            let lang = (resource.match(/(?<=language\\-)[a-z]+/i)[0]) ? (resource.match(/(?<=language\\-)[a-z]+/i)[0]) : \'\'
+
+            if(lang == \"cpp\") lang = \"c++\"
+            if(lang == \"csharp\") lang = \"c#\"
+            $(\"pre:eq(\"+ i +\")\").html(\"<input type=\'hide\'><span class=\'code_copy\' >复制</span><span class=\'hljs_lang\' >\"+ lang +\"</span>\" + resource)
+        }
+    $(\".code_copy\").click(function(){
+        let btn = $(this);
+        let pre = btn.nextAll(\"code:last\");
+        let temp = $(\"<textarea></textarea>\");
+        btn.text(\"\");
+        temp.text(pre.text());
+        temp.appendTo(pre);
+        temp.select();
+        document.execCommand(\"Copy\");
+        temp.remove();
+        btn.text(\"复制成功\");
+        setTimeout(()=> {
+                btn.text(\"复制\");
+        },5000);
+    });
+})
+</script>
