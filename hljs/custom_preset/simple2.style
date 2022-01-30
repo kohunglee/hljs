@@ -1,0 +1,63 @@
+<!-- 名字 - 简单二-->
+<!-- 作者 - 串串狗xk -->
+<style>
+    pre {
+        
+    }
+    
+    pre code {
+        /* unset */
+    }
+    .hljs {
+            
+    }
+    .hljs-line-numbers{
+        font-family: Consolas,Monaco,\'Andale Mono\',\'Ubuntu Mono\',monospace;
+        padding-right: 10px!important;
+         color: #b3b3b3;
+        text-align: right;
+        border-right: 2px #c2c2c2 solid!important
+    }
+    .hljs_lang {
+        
+    }
+.code_copy {
+    display: block;
+    position: relative;
+    text-align: right;
+    margin-bottom: -23px;
+    color: black;
+    margin-right: 20px;
+    top: 10px;
+    cursor: pointer;
+    text-shadow: 1px 0px 0px #ffffff;
+}
+pre input{
+    display:none;
+}
+</style>
+<script src=\"https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>
+<script defer>
+    $(document).ready(function(){
+        for( let i = 0; i < $(\"pre\").length; i++){
+            let resource =$(\"pre:eq(\"+ i +\")\").html()
+            
+            $(\"pre:eq(\"+ i +\")\").html(\"<input type=\'hide\'><span class=\'code_copy\' >复制</span>\" + resource)
+        }
+    $(\".code_copy\").click(function(){
+        let btn = $(this);
+        let pre = btn.nextAll(\"code:last\");
+        let temp = $(\"<textarea></textarea>\");
+        btn.text(\"\");
+        temp.text(pre.text());
+        temp.appendTo(pre);
+        temp.select();
+        document.execCommand(\"Copy\");
+        temp.remove();
+        btn.text(\"复制成功\");
+        setTimeout(()=> {
+                btn.text(\"复制\");
+        },5000);
+    });
+})
+</script>
