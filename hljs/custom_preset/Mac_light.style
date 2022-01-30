@@ -32,6 +32,7 @@
         background: #ffffff!important;
     }
     .hljs_lang {
+        font-size: 16px;
         user-select: none;
         display: block;
         width: 100%;
