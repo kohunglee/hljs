@@ -163,7 +163,7 @@ foreach($customStyleFileArray as $x=>$style_FileName)  // 将自定义扩展样�
 						<div class="custom_tips">
 							<b>说明：</b> 自定义外观扩展可在代码高亮的基础上，继续美化外观，也可辅助修复一些前台显示问题。
 							因为 Html 代码会在前台“代码高亮 CSS 内容”后部输出。
-							如果有好的创意，欢迎制作 .style 文件提交到 <a href="http://github.com/kohunglee/hljs">kohunglee/hljs</a> 的 Custom_preset 文件夹，我会及时更新到商店。
+							如果有好的创意，欢迎制作 .style 文件提交到 <a href="http://github.com/kohunglee/hljs">kohunglee/hljs</a> 的 custom_preset 文件夹，我会及时更新到商店。
 						<div>
 					</div>
 					<div class="modal-footer">
