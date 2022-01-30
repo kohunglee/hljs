@@ -15,8 +15,8 @@ $getConfig = [
 ];
 
 //根据get来生成数据
-$css = file_get_contents('hljs_css/'.$getConfig[cssName].'.min.css');
-$isViewLine = $getConfig[is_viewLine];
+$css = file_get_contents('hljs_css/'.$getConfig['cssName'].'.min.css');
+$isViewLine = $getConfig['is_viewLine'];
 ?>
 
 <style>
@@ -33,7 +33,7 @@ $isViewLine = $getConfig[is_viewLine];
 	pre{
 		display: none;
 	}
-	.<?php echo $getConfig[vLanguage]; ?>{
+	.<?php echo $getConfig['vLanguage']; ?>{
 		display: block;
 	}
 
