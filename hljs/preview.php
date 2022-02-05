@@ -4,7 +4,7 @@
  */
 //判断是否是管理员登录状态
 require_once '../../../init.php';
-!(ROLE == 'admin') && exit('非管理员权限！');
+!(ROLE == ('admin' || 'founder')) && exit('非管理员权限！');
 error_reporting(0);
 
 // 获取get
