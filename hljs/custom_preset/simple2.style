@@ -1,8 +1,8 @@
 <!-- 名字 - 简单二-->
 <!-- 作者 - 串串狗xk -->
 <style>
-    pre {
-        
+    .markdown pre {
+        background: white;
     }
     
     pre code {
@@ -26,11 +26,10 @@
     position: relative;
     text-align: right;
     margin-bottom: -23px;
-    color: black;
+    color: #b3b3b3;
     margin-right: 20px;
     top: 10px;
     cursor: pointer;
-    text-shadow: 1px 0px 0px #ffffff;
 }
 pre input{
     display:none;
