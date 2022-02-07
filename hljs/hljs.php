@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: hljs 语法着色+行号（一键换主题）
-Version: 1.2
+Version: 1.3
 Description: 引用 highlight.js ，可对代码进行语法着色，行号显示
 Author: 串串狗xk
 Author URL: http://www.ccgxk.com
