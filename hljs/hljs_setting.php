@@ -179,7 +179,7 @@ foreach($customStyleFileArray as $x=>$style_FileName)  // 将自定义扩展样�
 		</div>
 	<!--- 外观扩展模态框（结束） --->
 	<script>
-	var version 		= 11;  // 这是当前版本号代码，是版本更新的依据
+	var version 		= 13;  // 这是当前版本号代码，是版本更新的依据
 	var $CheckUpdate 	= $("#hljsCheckUpdate");  // '更新'的触发链接对象
 	var updateServer	= "../content/plugins/hljs/pluginsUpdate.php";  // 更新服务程序地址
 
